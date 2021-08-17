@@ -32,17 +32,21 @@ function listLoad() {
   list.innerHTML = "";
   for (let prop in data) {
     list.innerHTML += `<tr>
-    <td id="num-${data[prop].uid}"><strong>${data[prop].uid}</strong></td>
-    <td id="title-${data[prop].uid}">${data[prop].title}</td>
-    <td class="col-7" id="detail-${data[prop].uid}">${data[prop].detail}</td>
+    <td id="id+${data[prop].uid}"><strong>${parseInt(prop) + 1}</strong></td>
+    <td id="title+${data[prop].uid}">${data[prop].title}</td>
+    <td class="col-7" id="detail+${data[prop].uid}">${data[prop].detail}</td>
     <td>
-      <button onclick="del(this)" id="del-${data[prop].uid}" type="button" data-bs-toggle="modal"
+      <button onclick="del(this)" id="del+${
+        data[prop].uid
+      }" type="button" data-bs-toggle="modal"
       data-bs-target="#exampleModal" class="btn btn-danger">
         Apagar
       </button>
-      <button onclick="edit(this.id)" id="edit-${data[prop].uid}" type="button" class="btn btn-success">
+      <button onclick="edit(this.id)" id="edit+${
+        data[prop].uid
+      }" type="button" class="btn btn-success">
         Editar
-      </button>      
+      </button>
     </td>
     </tr>`;
   }
@@ -81,17 +85,16 @@ function newRecado() {
 var editId; //GlobalVariable não coloca var dentro da function senao
 //cria uma var com mesmo nome mas são diferentes
 function edit(obj) {
-  editId = obj.split("-")[1];
+  editId = obj.split("+")[1];
+  //console.log(editId);
   var saveBtn = document.getElementById("saveBtn");
   saveEditBtn.style.display = "block";
   saveBtn.style.display = "none";
-  //#TODO copiar os valores e colocar no input
-  titleValue = document.getElementById(`title-${editId}`).innerText;
-  detailValue = document.getElementById(`detail-${editId}`).innerText;
+  titleValue = document.getElementById(`title+${editId}`).innerText;
+  detailValue = document.getElementById(`detail+${editId}`).innerText;
   descricao.value = titleValue;
   detalhamento.value = detailValue;
   alert.style.display = "none";
-  //console.log(editId);
 }
 
 function saveBtnEdit() {
@@ -133,7 +136,7 @@ var body = document.getElementById("modal-body");
 
 var deleteId; //GlobalVariable
 function del(obj) {
-  deleteId = obj.id.split("-")[1];
+  deleteId = obj.id.split("+")[1];
   btndelItem.style.display = "block";
   btndelTudo.style.display = "none";
 
