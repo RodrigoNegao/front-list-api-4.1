@@ -137,11 +137,12 @@ var body = document.getElementById("modal-body");
 var deleteId; //GlobalVariable
 function del(obj) {
   deleteId = obj.id.split("+")[1];
+  titleValue = document.getElementById(`title+${deleteId}`).innerText;
   btndelItem.style.display = "block";
   btndelTudo.style.display = "none";
 
-  titulo.innerHTML = `Confirmação de Exclusão do <strong>Item ${deleteId}</strong>`;
-  body.innerHTML = `Tem certeza ? Não poderá ser recupado o <strong>Item ${deleteId}</strong> no futuro. `;
+  titulo.innerHTML = `Confirmação de Exclusão do <strong>Item ${titleValue}</strong>`;
+  body.innerHTML = `Tem certeza ? Não poderá ser recupado o <strong>Item ${titleValue}</strong> no futuro. `;
 }
 
 function confirmDelete() {
