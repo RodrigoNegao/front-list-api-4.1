@@ -3,33 +3,33 @@
 //
 
 var data;
-const link = "http://localhost:8080";
+const link = 'https://backapi4.herokuapp.com/api';
 
-var userLocalStorage = localStorage.getItem("user");
+var userLocalStorage = localStorage.getItem('user');
 var user = JSON.parse(userLocalStorage); // Retorna se ja existe
 
-window.addEventListener("load", () => {
+window.addEventListener('load', () => {
   //Todos os elementos do DOM e scripts estão disponiveis
-  axios.get(link + "/messages/" + user).then((response) => {
+  axios.get(link + '/messages/' + user).then((response) => {
     data = response.data;
     listLoad(data);
     console.log(data);
   });
 });
 
-var list = document.getElementById("list");
+var list = document.getElementById('list');
 
-var alert = document.getElementById("alert");
-alert.style.display = "none";
+var alert = document.getElementById('alert');
+alert.style.display = 'none';
 
-var descricao = document.getElementById("descricao");
-var detalhamento = document.getElementById("detalhamento");
-var saveEditBtn = document.getElementById("saveEditBtn");
-saveEditBtn.style.display = "none";
+var descricao = document.getElementById('descricao');
+var detalhamento = document.getElementById('detalhamento');
+var saveEditBtn = document.getElementById('saveEditBtn');
+saveEditBtn.style.display = 'none';
 
 //função load a lista sempre q necessario
 function listLoad() {
-  list.innerHTML = "";
+  list.innerHTML = '';
   for (let prop in data) {
     list.innerHTML += `<tr>
     <td id="id+${data[prop].uid}"><strong>${parseInt(prop) + 1}</strong></td>
@@ -58,7 +58,7 @@ function listLoad() {
 // item, descricao, detalhamento, acao
 function newRecado() {
   axios
-    .post(link + "/message", {
+    .post(link + '/message', {
       title: descricao.value,
       detail: detalhamento.value,
       id_user: user,
@@ -73,10 +73,10 @@ function newRecado() {
       console.log(error.response.data.msg);
     });
 
-  alert.style.display = "block";
+  alert.style.display = 'block';
 
-  descricao.value = "";
-  detalhamento.value = "";
+  descricao.value = '';
+  detalhamento.value = '';
 
   //listLoad();
 }
@@ -85,24 +85,24 @@ function newRecado() {
 var editId; //GlobalVariable não coloca var dentro da function senao
 //cria uma var com mesmo nome mas são diferentes
 function edit(obj) {
-  editId = obj.split("+")[1];
+  editId = obj.split('+')[1];
   //console.log(editId);
-  var saveBtn = document.getElementById("saveBtn");
-  saveEditBtn.style.display = "block";
-  saveBtn.style.display = "none";
+  var saveBtn = document.getElementById('saveBtn');
+  saveEditBtn.style.display = 'block';
+  saveBtn.style.display = 'none';
   titleValue = document.getElementById(`title+${editId}`).innerText;
   detailValue = document.getElementById(`detail+${editId}`).innerText;
   descricao.value = titleValue;
   detalhamento.value = detailValue;
-  alert.style.display = "none";
+  alert.style.display = 'none';
 }
 
 function saveBtnEdit() {
   //console.log(editId);
-  saveEditBtn.style.display = "none";
-  saveBtn.style.display = "block";
+  saveEditBtn.style.display = 'none';
+  saveBtn.style.display = 'block';
   axios
-    .put(link + "/message/" + editId, {
+    .put(link + '/message/' + editId, {
       title: descricao.value,
       detail: detalhamento.value,
     })
@@ -116,30 +116,30 @@ function saveBtnEdit() {
       console.log(error.response.data.msg);
     });
 
-  descricao.value = "";
-  detalhamento.value = "";
-  alert.style.display = "block";
+  descricao.value = '';
+  detalhamento.value = '';
+  alert.style.display = 'block';
 
   //listLoad();
 }
 
 //Delete
 //criado um modol bootstrap
-var btndelTudo = document.getElementById("btndelTudo");
-btndelTudo.style.display = "none";
+var btndelTudo = document.getElementById('btndelTudo');
+btndelTudo.style.display = 'none';
 
-var btndelItem = document.getElementById("btndelItem");
-btndelItem.style.display = "block";
+var btndelItem = document.getElementById('btndelItem');
+btndelItem.style.display = 'block';
 
-var titulo = document.getElementById("exampleModalLabel");
-var body = document.getElementById("modal-body");
+var titulo = document.getElementById('exampleModalLabel');
+var body = document.getElementById('modal-body');
 
 var deleteId; //GlobalVariable
 function del(obj) {
-  deleteId = obj.id.split("+")[1];
+  deleteId = obj.id.split('+')[1];
   titleValue = document.getElementById(`title+${deleteId}`).innerText;
-  btndelItem.style.display = "block";
-  btndelTudo.style.display = "none";
+  btndelItem.style.display = 'block';
+  btndelTudo.style.display = 'none';
 
   titulo.innerHTML = `Confirmação de Exclusão do <strong>Item ${titleValue}</strong>`;
   body.innerHTML = `Tem certeza ? Não poderá ser recupado o <strong>Item ${titleValue}</strong> no futuro. `;
@@ -148,7 +148,7 @@ function del(obj) {
 function confirmDelete() {
   //console.log(deleteId)
   axios
-    .delete(link + "/message/" + deleteId)
+    .delete(link + '/message/' + deleteId)
     .then((response) => {
       //console.log(response.data.msg);
       setTimeout(() => {
